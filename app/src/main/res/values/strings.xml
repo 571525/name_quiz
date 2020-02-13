@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">NameQuiz3</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="menu_database">Database</string>
+    <string name="start_quiz">Start Quiz</string>
+    <string name="title_activity_database">DatabaseActivity</string>
+    <string name="title_activity_quiz">QuizActivity</string>
+    <string name="delete_button">Delete</string>
+    <string name="database">Database</string>
+    <string name="gallery">Local storage</string>
+    <string name="camera">Camera</string>
+    <string name="add_name">Add name</string>
+    <string name="add">Add</string>
+    <string name="error_adding_new">You must add a name</string>
+    <string name="ok">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="was_added">was added</string>
+    <string name="no_name_added">You must add a name</string>
+    <string name="main_title">Name Quiz</string>
+    <string name="prefrences">Prefrences</string>
+    <string name="home">Home</string>
+    <string name="preferences">Preferences</string>
+    <string name="prefs_intro">This app requires you to enter a name</string>
+    <string name="title_activity_prefs">PrefsActivity</string>
+    <string name="prefs_title">Preferences</string>
+    <string name="save">Save</string>
+    <string name="name_changed">Name changed to</string>
+    <string name="score">Score:</string>
+    <string name="total">Total:</string>
+    <string name="submit">Submit</string>
+    <string name="name">Name</string>
+    <string name="correct">CORRECT!</string>
+    <string name="wrong">WRONG! It was:</string>
+</resources>
