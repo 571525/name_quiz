@@ -31,4 +31,5 @@
     <string name="name">Name</string>
     <string name="correct">CORRECT!</string>
     <string name="wrong">WRONG! It was:</string>
+    <string name="not_enough_entries">You must have more than 2 entries to play</string>
 </resources>

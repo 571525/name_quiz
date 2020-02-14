@@ -47,4 +47,8 @@ public class DbHandler {
         Utils.saveFile(context,image,item.image_url);
     }
 
+    public void close() {
+        database.close();
+    }
+
 }

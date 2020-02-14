@@ -43,7 +43,7 @@ public class Utils {
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(mypath);
-            imageToSave.compress(Bitmap.CompressFormat.JPEG,50, fos);
+            imageToSave.compress(Bitmap.CompressFormat.JPEG,100, fos);
             fos.close();
         } catch (Exception e) {
             Log.e("SAVE_IMAGE", e.getMessage());

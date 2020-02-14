@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.hvl.dat153.namequiz3.Room.DbHandler;
 import com.hvl.dat153.namequiz3.Room.Item;
 import com.hvl.dat153.namequiz3.Utils.Constants;
@@ -68,7 +69,24 @@ public class QuizActivity extends AppCompatActivity {
         score_view = findViewById(R.id.score_value);
         total_view = findViewById(R.id.total_value);
 
-        newRound();
+        //must have 2 inputs in dataset to start quiz
+        if (dataset.size() > 1)
+            newRound();
+        else {
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.quiz_layout), getText(R.string.not_enough_entries),Snackbar.LENGTH_INDEFINITE)
+                    .setAction("DATABASE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(getApplicationContext(), DatabaseActivity.class));
+                        }
+                    });
+            snackbar.setBackgroundTint(Color.RED);
+            snackbar.setActionTextColor(Color.BLUE);
+            snackbar.setTextColor(Color.BLACK);
+
+            snackbar.show();
+        }
     }
 
     public int getScore() {
@@ -83,7 +101,11 @@ public class QuizActivity extends AppCompatActivity {
         this.dataset = items;
     }
 
-    private void newRound() {
+    public DbHandler getDatabase() {
+        return database;
+    }
+
+    public void newRound() {
 
         input.setText("");
 
@@ -121,13 +143,13 @@ public class QuizActivity extends AppCompatActivity {
         score = Integer.parseInt(score_view.getText().toString());
         total = Integer.parseInt(total_view.getText().toString());
 
-        if(correct) {
+        if (correct) {
             score++;
         }
         total++;
 
-        score_view.setText(""+score);
-        total_view.setText(""+total);
+        score_view.setText("" + score);
+        total_view.setText("" + total);
     }
 
 
