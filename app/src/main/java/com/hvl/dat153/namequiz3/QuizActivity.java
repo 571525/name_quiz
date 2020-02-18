@@ -54,12 +54,7 @@ public class QuizActivity extends AppCompatActivity {
 
         random = new Random();
 
-        try {
-            DbHandler.initialize(getApplicationContext());
-            database = DbHandler.getInstance();
-        } catch (Exception e) {
-            database = DbHandler.getInstance();
-        }
+        database = DbHandler.getInstance(getApplicationContext());
 
         dataset = database.getAll();
 
@@ -74,7 +69,7 @@ public class QuizActivity extends AppCompatActivity {
             newRound();
         else {
             Snackbar snackbar = Snackbar
-                    .make(findViewById(R.id.quiz_layout), getText(R.string.not_enough_entries),Snackbar.LENGTH_INDEFINITE)
+                    .make(findViewById(R.id.quiz_layout), getText(R.string.not_enough_entries), Snackbar.LENGTH_INDEFINITE)
                     .setAction("DATABASE", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

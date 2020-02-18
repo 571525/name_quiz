@@ -61,12 +61,7 @@ public class DatabaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        try {
-            DbHandler.initialize(getApplicationContext());
-            database = DbHandler.getInstance();
-        } catch (Exception e) {
-            database = DbHandler.getInstance();
-        }
+        database = DbHandler.getInstance(getApplicationContext());
 
         buildFabs();
         buildRecyclerView();
@@ -85,31 +80,11 @@ public class DatabaseActivity extends AppCompatActivity {
         textview_camera = findViewById(R.id.textview_camera);
         textview_gallery = findViewById(R.id.textview_gallery);
 
+        //handles the animation for fab button
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (isOpen) {
-
-                    textview_camera.setVisibility(View.INVISIBLE);
-                    textview_gallery.setVisibility(View.INVISIBLE);
-                    fab_gallery.startAnimation(fab_close);
-                    fab_camera.startAnimation(fab_close);
-                    fab_main.startAnimation(fab_anticlock);
-                    fab_gallery.setClickable(false);
-                    fab_camera.setClickable(false);
-                    isOpen = false;
-                } else {
-                    textview_camera.setVisibility(View.VISIBLE);
-                    textview_gallery.setVisibility(View.VISIBLE);
-                    fab_gallery.startAnimation(fab_open);
-                    fab_camera.startAnimation(fab_open);
-                    fab_main.startAnimation(fab_clock);
-                    fab_gallery.setClickable(true);
-                    fab_camera.setClickable(true);
-                    isOpen = true;
-                }
-
+                isOpen = isOpen ? closeAnimation() : openAnimation();
             }
         });
 
@@ -150,7 +125,6 @@ public class DatabaseActivity extends AppCompatActivity {
             startActivityForResult(intent, Constants.LOAD_IMAGE);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.PERMISSION_REQ_EXTERNAL_STORAGE);
-
         }
     }
 
@@ -159,10 +133,32 @@ public class DatabaseActivity extends AppCompatActivity {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, Constants.CAMERA_PICTURE);
         } else {
-
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Constants.PERMISSION_REQ_CAMERA);
-
         }
+    }
+
+    //the animation for closing the fab button
+    private boolean closeAnimation() {
+        textview_camera.setVisibility(View.INVISIBLE);
+        textview_gallery.setVisibility(View.INVISIBLE);
+        fab_gallery.startAnimation(fab_close);
+        fab_camera.startAnimation(fab_close);
+        fab_main.startAnimation(fab_anticlock);
+        fab_gallery.setClickable(false);
+        fab_camera.setClickable(false);
+        return false;
+    }
+
+    //the animation for clicking the fab button
+    private boolean openAnimation() {
+        textview_camera.setVisibility(View.VISIBLE);
+        textview_gallery.setVisibility(View.VISIBLE);
+        fab_gallery.startAnimation(fab_open);
+        fab_camera.startAnimation(fab_open);
+        fab_main.startAnimation(fab_clock);
+        fab_gallery.setClickable(true);
+        fab_camera.setClickable(true);
+        return true;
     }
 
     @Override
@@ -211,7 +207,6 @@ public class DatabaseActivity extends AppCompatActivity {
 
     }
 
-
     private void createAddPersonDialog(final Bitmap bitmap) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(DatabaseActivity.this);
 
@@ -230,10 +225,7 @@ public class DatabaseActivity extends AppCompatActivity {
         final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    dialog.cancel();
-                    return;
-                }
+                if (which == DialogInterface.BUTTON_NEGATIVE) dialog.cancel();
             }
         };
 

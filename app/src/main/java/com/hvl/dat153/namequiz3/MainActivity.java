@@ -25,7 +25,6 @@ import com.hvl.dat153.namequiz3.Utils.Constants;
 public class MainActivity extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getPrefs() {
-        SharedPreferences name = getSharedPreferences(Constants.PREFS_FILE,MODE_PRIVATE);
+        SharedPreferences name = getSharedPreferences(Constants.PREFS_FILE, MODE_PRIVATE);
         if (!name.contains(Constants.PREFS_NAME)) {
             createPrefsDialog();
         }
@@ -96,12 +95,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setPrefs(String name) {
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Constants.PREFS_FILE,MODE_PRIVATE);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Constants.PREFS_FILE, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString(Constants.PREFS_NAME, name);
-        editor.commit();
-
+        editor.apply();
     }
 
     private void buildMenu() {

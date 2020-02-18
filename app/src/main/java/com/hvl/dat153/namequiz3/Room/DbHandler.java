@@ -11,26 +11,20 @@ import java.util.List;
 
 public class DbHandler {
 
-    public static DbHandler instance;
+    private static DbHandler instance;
 
     private Context context;
     private AppDatabase database;
 
     private DbHandler(Context context) {
         this.context = context;
-        database = Room.databaseBuilder(context,AppDatabase.class, "database.db").allowMainThreadQueries().build();
+        database = Room.databaseBuilder(context, AppDatabase.class, "database.db").allowMainThreadQueries().build();
     }
 
-    public static DbHandler getInstance() {
-        if (instance==null) throw new NullPointerException("Call initialize first");
-        else return instance;
-    }
-
-    public static void initialize(Context context) throws Exception {
-        if (instance != null) throw new Exception("Instance is initialized, use getInstance()");
-        else {
-            instance = new DbHandler(context);
-        }
+    public static DbHandler getInstance(Context context) {
+        //checks if instance doesnt exist, and if it doesnt just make a new one
+        if (instance == null) instance = new DbHandler(context);
+        return instance;
     }
 
     public List<Item> getAll() {
@@ -38,13 +32,13 @@ public class DbHandler {
     }
 
     public void deleteItem(Item item) {
-        Utils.deleteFile(item.image_url,context);
+        Utils.deleteFile(item.image_url, context);
         database.itemDao().delete(item);
     }
 
     public void addItem(Item item, Bitmap image) {
         database.itemDao().insert(item);
-        Utils.saveFile(context,image,item.image_url);
+        Utils.saveFile(context, image, item.image_url);
     }
 
     public void close() {

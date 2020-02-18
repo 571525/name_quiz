@@ -18,6 +18,8 @@ import com.hvl.dat153.namequiz3.Room.DbHandler;
 import com.hvl.dat153.namequiz3.Room.Item;
 import com.hvl.dat153.namequiz3.Utils.Utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
@@ -30,24 +32,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         this.dataset = dataset;
         this.context = context;
 
-        try {
-            DbHandler.initialize(context);
-            database = DbHandler.getInstance();
-        }catch (Exception e) {
-            database = DbHandler.getInstance();
-        }
+        database = DbHandler.getInstance(context);
     }
 
     // Create new views (invoked by the layout manager)
+    @NotNull
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.database_row_template, parent, false);
 
-        ItemViewHolder vh = new ItemViewHolder(v);
-        return vh;
+        return new ItemViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -69,7 +65,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
                 dataset.remove(position);
 
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position,dataset.size());
+                notifyItemRangeChanged(position, dataset.size());
 
                 Toast.makeText(context, "You deleted " + item.uglifiedName, Toast.LENGTH_SHORT).show();
             }
@@ -94,9 +90,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.item_name);
-            image = (ImageView) itemView.findViewById(R.id.item_image);
-            delete = (Button) itemView.findViewById(R.id.delete_button);
+            name = itemView.findViewById(R.id.item_name);
+            image = itemView.findViewById(R.id.item_image);
+            delete = itemView.findViewById(R.id.delete_button);
         }
     }
 }

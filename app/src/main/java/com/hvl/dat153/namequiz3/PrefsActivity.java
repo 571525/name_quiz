@@ -32,11 +32,10 @@ public class PrefsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        prefs = getSharedPreferences(Constants.PREFS_FILE,MODE_PRIVATE);
-        name = prefs.getString(Constants.PREFS_NAME,null);
+        prefs = getSharedPreferences(Constants.PREFS_FILE, MODE_PRIVATE);
+        name = prefs.getString(Constants.PREFS_NAME, null);
 
         buildView();
-
     }
 
     private void buildView() {
@@ -56,9 +55,9 @@ public class PrefsActivity extends AppCompatActivity {
 
                 if (!inputIsEmpty) {
                     prefs.edit()
-                            .putString(Constants.PREFS_NAME,nameStr)
-                            .commit();
-                    Toast.makeText(getApplicationContext(),getText(R.string.name_changed) + " " +nameStr,Toast.LENGTH_SHORT).show();
+                            .putString(Constants.PREFS_NAME, nameStr)
+                            .apply();
+                    Toast.makeText(getApplicationContext(), getText(R.string.name_changed) + " " + nameStr, Toast.LENGTH_SHORT).show();
                 } else {
                     error.setVisibility(View.VISIBLE);
                 }
